@@ -1,0 +1,45 @@
+﻿<Window x:Class="cmdR.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:toolkit="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+        Title="CmdR" 
+        Height="450" 
+        Width="780"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignData Source=MainWindowViewModel.xaml}"
+        Style="{StaticResource MetroStyle}">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="65"/>
+        </Grid.RowDefinitions>
+
+        
+        <Rectangle Fill="{StaticResource AppDarkBrush02}" Grid.Row="0" />
+        <ScrollViewer Name="_scrollViewer" Grid.Row="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <toolkit:RichTextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="5" FontFamily="Consolas"
+                         Foreground="{StaticResource AppGreenBrush}" Text="{Binding Output}"  Name="_output"  IsReadOnly="True" IsReadOnlyCaretVisible="False"
+                         Background="Transparent" BorderThickness="0" FontSize="15">
+
+                <toolkit:RichTextBox.TextFormatter>
+                    <toolkit:XamlFormatter />
+                </toolkit:RichTextBox.TextFormatter>
+            </toolkit:RichTextBox>
+        </ScrollViewer>
+
+
+        <Rectangle Fill="{StaticResource AppDarkBrush03}" Grid.Row="1" />
+        <TextBlock HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="5" TextWrapping="Wrap" FontFamily="Consolas"
+                   Foreground="{StaticResource AppBlueBrush}" Text="{Binding Prompt}" Grid.Row="1" FontSize="15" />
+
+
+        <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap" Grid.Row="2" FontFamily="Consolas" 
+                 Background="{StaticResource AppDarkBrush01}" Foreground="{StaticResource AppBlueBrush}" KeyUp="OnKeyUpHandler" BorderBrush="#ff000000"
+                 Text="{Binding Command, Mode=TwoWay}"  BorderThickness="0" FontSize="15" Name="_command" />
+
+    </Grid>
+</Window>
