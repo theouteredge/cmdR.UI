@@ -9,12 +9,12 @@ namespace cmdR.UI.CmdRModules
 {
     public class DiffModule : ModuleBase, ICmdRModule
     {
-        public void Initalise(CmdR cmdR, bool overwriteRoutes)
+        public DiffModule(CmdR cmdR)
         {
             _cmdR = cmdR;
-
             cmdR.RegisterRoute("diff left right", DiffFiles, "");
         }
+
 
         private void DiffFiles(IDictionary<string, string> param, CmdR cmdR)
         {

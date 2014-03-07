@@ -10,7 +10,7 @@ namespace cmdR.UI.CmdRModules
 {
     public class PartitionModule : ModuleBase, ICmdRModule
     {
-        public void Initalise(CmdR cmdR, bool overwriteRoutes)
+        public PartitionModule(CmdR cmdR)
         {
             _cmdR = cmdR;
 

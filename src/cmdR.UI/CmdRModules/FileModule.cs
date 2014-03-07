@@ -13,7 +13,7 @@ namespace cmdR.UI.CmdRModules
 {
     public class FileModule : ModuleBase, ICmdRModule
     {
-        public void Initalise(CmdR cmdR, bool overwriteRoutes)
+        public FileModule(CmdR cmdR)
         {
             _cmdR = cmdR;
 
@@ -30,6 +30,7 @@ namespace cmdR.UI.CmdRModules
 
             cmdR.RegisterRoute("find match", Find, "Finds all file names matching a given regex\n/r to search in sub directories");
         }
+
 
         private void Find(IDictionary<string, string> param, CmdR cmdR)
         {

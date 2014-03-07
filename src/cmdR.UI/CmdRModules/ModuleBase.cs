@@ -4,9 +4,10 @@ using System.Text.RegularExpressions;
 
 namespace cmdR.UI.CmdRModules
 {
-    public class ModuleBase
+    public abstract class ModuleBase : ICmdRModule
     {
         protected CmdR _cmdR;
+
 
         protected IDictionary<string, string> GetMarks()
         {
@@ -15,6 +16,7 @@ namespace cmdR.UI.CmdRModules
 
             return _cmdR.State.Variables["marks"] as IDictionary<string, string>;
         }
+
 
         protected string ParseMarks(string input)
         {
@@ -57,10 +59,10 @@ namespace cmdR.UI.CmdRModules
             if (Directory.Exists(path))
                 return new DirectoryInfo(path).FullName;
 
-            if (File.Exists(combinedPath))
+            if (Directory.Exists(Path.GetDirectoryName(combinedPath)))
                 return new FileInfo(combinedPath).FullName;
 
-            if (File.Exists(path))
+            if (Directory.Exists(Path.GetDirectoryName(path)))
                 return new FileInfo(path).FullName;
 
             return null;
@@ -167,6 +169,7 @@ namespace cmdR.UI.CmdRModules
         }
 
 
+
         protected void WriteLine(string colour, string output)
         {
             _cmdR.Console.WriteLine("<Run Foreground=\"{1}\">{0}</Run>", output.XmlEscape(), colour);
@@ -176,5 +179,21 @@ namespace cmdR.UI.CmdRModules
         {
             _cmdR.Console.Write("<Run Foreground=\"{1}\">{0}</Run>", output.XmlEscape(), colour);
         }
+
+
+
+        protected void WriteErrorLine(string message, params object[] param)
+        {
+            message = string.Format(message, param);
+            _cmdR.Console.WriteLine("<Run FontWeight=\"Bold\" Foreground=\"#FFFF9900\">{0}</Run>", message.XmlEscape());
+        }
+
+        protected void WriteHighlightLine(string message, params object[] param)
+        {
+            message = string.Format(message, param);
+            _cmdR.Console.WriteLine("<Run FontWeight=\"Bold\" Foreground=\"Yellow\">{0}</Run>", message.XmlEscape());
+        }
+
+
     }
 }

@@ -87,6 +87,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\cmdR.1.4.0\lib\cmdR.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.XmlTransform">
+      <HintPath>..\packages\Microsoft.Web.Xdt.1.0.0\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
+    </Reference>
     <Reference Include="ServiceStack.Text">
       <HintPath>..\packages\ServiceStack.Text.3.9.46\lib\net35\ServiceStack.Text.dll</HintPath>
     </Reference>
@@ -124,6 +127,7 @@
     <Compile Include="CmdRModules\PingModule.cs" />
     <Compile Include="CmdRModules\RegexMatchAndReplace.cs" />
     <Compile Include="CmdRModules\SystemModule.cs" />
+    <Compile Include="CmdRModules\XmlModule.cs" />
     <Compile Include="ViewModels\AppSettings.cs" />
     <Compile Include="ViewModels\IWpfViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

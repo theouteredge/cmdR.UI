@@ -11,12 +11,11 @@ namespace cmdR.UI.CmdRModules
 {
     public class GrepModule : ModuleBase, ICmdRModule
     {
-        public void Initalise(CmdR cmdR, bool overwriteRoutes)
+        public GrepModule(CmdR cmdR)
         {
             _cmdR = cmdR;
 
-            cmdR.RegisterRoute("grep file-match content-match", Grep, "Reads any files matching the file-match regex and matches its contents against the content-match regex, each matching line is printed out to the console\n\t/rm switch enables the search to match files in all subfolders");
-
+            cmdR.RegisterRoute("grep file-match content-match", Grep, "Reads any files matching the file-match regex and matches its contents against the content-match regex, each matching line is printed out to the console\n\t/r switch enables the search to match files in all subfolders");
             cmdR.RegisterRoute("grep-rep file output-file regex replace", GrepReplace, "Reads the file and matches its contents against the regex all matches will be replaced and the result will be written to the output-file\nUse /t to run without saving the results back to the file");
         }
 

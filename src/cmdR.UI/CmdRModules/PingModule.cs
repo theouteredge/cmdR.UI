@@ -13,7 +13,7 @@ namespace cmdR.UI.CmdRModules
     {
         private CmdR _cmdR;
 
-        public void Initalise(CmdR cmdR, bool overwriteRoutes)
+        public PingModule(CmdR cmdR)
         {
             _cmdR = cmdR;
 

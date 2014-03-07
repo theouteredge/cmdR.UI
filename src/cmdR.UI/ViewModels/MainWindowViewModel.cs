@@ -33,7 +33,8 @@ namespace cmdR.UI.ViewModels
             CommandHistory = new List<string>();
         }
 
-        public MainWindowViewModel(Dispatcher dispatcher, MainWindow window) : base(dispatcher)
+        public MainWindowViewModel(Dispatcher dispatcher, MainWindow window)
+            : base(dispatcher)
         {
             _window = window;
             Command = "";
@@ -50,15 +51,24 @@ namespace cmdR.UI.ViewModels
             _cmdR.State.Variables.Add("path", Settings.Path ?? GetUserDirectory());
 
             CommandHistory = Settings.Last10Commands ?? new List<string>();
-            
-            InvokeOnBackgroundThread(() => {
-                    _cmdR.Console.WriteLine("Discovering commands, please wait...");
+
+            InvokeOnBackgroundThread(() =>
+            {
+                _cmdR.Console.WriteLine("Discovering commands, please wait...");
+                try
+                {
                     _cmdR.AutoRegisterCommands();
                     _cmdR.Console.WriteLine("{0} commands registered", _cmdR.State.Routes.Count);
-                    
-                    NotifyPropertyChanged("Output");
-                    NotifyPropertyChanged("Prompt");
-                });
+                }
+                catch (Exception e)
+                {
+                    _cmdR.Console.WriteLine("<Run FontWeight=\"Bold\" Foreground=\"#FFE671B8\">An Exception was thrown while auto discovering your commands</Run>");
+                    _cmdR.Console.WriteLine("<Run FontWeight=\"Bold\" Foreground=\"#FFE671B8\">Message: {0}</Run>", e.Message.XmlEscape());
+                }
+
+                NotifyPropertyChanged("Output");
+                NotifyPropertyChanged("Prompt");
+            });
         }
 
         public void SaveSettings()
@@ -116,22 +126,24 @@ namespace cmdR.UI.ViewModels
                         else
                             _cmdR.Console.WriteLine("<Run FontWeight=\"Bold\">\n{0}</Run>", Command.XmlEscape());
 
-                        
+
                         Command = string.Empty;
 
                         NotifyPropertyChanged("Output");
                         NotifyPropertyChanged("Command");
-                        
+
                         InvokeOnUIThread(() => _window._output.IsReadOnly = true);
                         _cmdR.ExecuteCommand(command);
                         InvokeOnUIThread(() => _window._output.IsReadOnly = false);
-                        
+
                         Command = string.Empty;
                     }
                     catch (Exception e)
                     {
                         _cmdR.Console.WriteLine("An exception was thrown while running your command");
                         _cmdR.Console.WriteLine(" {0}\n", e.Message);
+
+                        InvokeOnUIThread(() => _window._output.IsReadOnly = false);
 
                         Command = command;
                     }
@@ -142,6 +154,8 @@ namespace cmdR.UI.ViewModels
                 });
         }
 
+
+
         public void HandleUpKeyPress()
         {
             // check to see if we have any history to cycle through before we do anything
@@ -150,7 +164,7 @@ namespace cmdR.UI.ViewModels
 
             // if we haven't cycled yet and we are pressing Down we probably want to see the last command
             if (CommandHistoryPointer == null)
-                CommandHistoryPointer = CommandHistory.Count()-1;
+                CommandHistoryPointer = CommandHistory.Count() - 1;
             else
                 CommandHistoryPointer -= 1;
 
@@ -163,6 +177,8 @@ namespace cmdR.UI.ViewModels
                 NotifyPropertyChanged("Command");
             }
         }
+
+
 
         public void HandleDownKeyPress()
         {

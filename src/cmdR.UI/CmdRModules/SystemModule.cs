@@ -11,7 +11,7 @@ namespace cmdR.UI.CmdRModules
     {
         private CmdR _cmdR;
 
-        public void Initalise(CmdR cmdR, bool overwriteRoutes)
+        public SystemModule(CmdR cmdR)
         {
             _cmdR = cmdR;
             _cmdR.RegisterRoute("cls", Cls, "Clears the content of the screen");
